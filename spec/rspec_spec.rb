@@ -23,5 +23,16 @@ describe Array do
         it "returns pairs of indicies that sum to zero" do
             expect(sum_arr.two_sum).to eq([[0, 4], [2, 3]])
         end
+
+        it "returns a 2D array sorted dictionary-wise" do
+            expect(sum_arr.two_sum).to start_with([0, 4])
+        end
+    end
+
+    describe "#my_transpose" do
+        subject(:t_arr) { t_arr = [[0, 1, 2], [3, 4, 5], [6, 7, 8]] }
+        it "converts a 2D array so that each column becomes a new array" do
+            expect(t_arr.my_transpose).to eq([[0, 3, 6], [1, 4, 7], [2, 5, 8]])
+        end
     end
 end
