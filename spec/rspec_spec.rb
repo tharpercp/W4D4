@@ -35,4 +35,16 @@ describe Array do
             expect(t_arr.my_transpose).to eq([[0, 3, 6], [1, 4, 7], [2, 5, 8]])
         end
     end
+
+    describe "#stock_picker" do 
+        subject(:stock_arr) { stock_arr = [18.0, 12.5, 15.5, 13.5, 10.0, 17.0]}
+        it "outputs the most profitable pair of days on which to buy and sell the stock" do
+            expect(stock_arr.stock_picker).to eq([10.0, 17.0])
+        end
+    end
+
+    describe "#towers_of_hanoi" do
+        subject(:stack) { stack = [[3, 2, 1], [], []]}
+
+
 end

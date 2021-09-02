@@ -25,5 +25,22 @@ class Array
         self.transpose
     end
 
+    def stock_picker
+        max = self[1] - self[0]
+        arr = [self[0], self[1]]
+        (0...self.length - 1).each do |idx1|
+            (idx1 + 1...self.length).each do |idx2|
+                stock_return = self[idx2] - self[idx1]
+                if stock_return > max
+                    max = stock_return
+                    arr = [self[idx1], self[idx2]]
+                end
+            end
+        end
+        arr
+    end
+
+    
+
 
 end
