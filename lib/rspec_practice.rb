@@ -39,8 +39,31 @@ class Array
         end
         arr
     end
+end
 
-    
+class BadPlacementError < StandardError; end
 
+class TowersOfHanoi
+    def initialize
+        @stack = [[3, 2, 1], [], []]
+        @stack
+    end
 
+    def move
+        puts "Please enter take and place, separated by a comma (0,1):"
+        begin
+            input = gets.chomp.split(",").map(&:to_i)
+            take, place = input
+            raise "Can't place there." if @stack[take].last > @stack[place].last
+            raise "Out of range." if !take.between?(0, 2) || !place.between?(0, 2)
+            raise "Can't take from empty." if @stack[take].empty?
+            raise "Incorrect input." if !input.length == 2
+        rescue
+            retry
+        end
+
+        @stack[place] << @stack[take].pop
+    end
+
+    attr_accessor :stack
 end

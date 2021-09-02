@@ -42,9 +42,24 @@ describe Array do
             expect(stock_arr.stock_picker).to eq([10.0, 17.0])
         end
     end
+end
 
-    describe "#towers_of_hanoi" do
-        subject(:stack) { stack = [[3, 2, 1], [], []]}
+describe TowersOfHanoi do
+    subject(:stack1) { TowersOfHanoi.new }
+    describe "#initialize" do
+        it "correctly instantiates the stack" do
+            expect(TowersOfHanoi.new.stack).to eq([[3, 2, 1], [], []])
+        end
+    end
 
+    describe "#move" do
+        subject(:stack2) { TowersOfHanoi.new }
+        
+        it "throws an error if user incorrectly places a disc" do
+            stack2.stack = [[3, 2], [1], []]
+            allow(stack2).to receive(:move)
+            expect(stack2.move(0, 1)).to raise_error("Can't place there.")
+        end
 
+    end
 end
