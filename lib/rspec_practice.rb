@@ -54,7 +54,15 @@ class TowersOfHanoi
         unless @stack[place].empty?
             raise "Can't place it there." if @stack[place].last < @stack[take].last
         end
+
+        @stack[place] << @stack[take].pop
     end
+
+    def won?
+        @stack == [[],[],[3, 2, 1]]
+    end
+
+
 
     # def move
     #     begin
