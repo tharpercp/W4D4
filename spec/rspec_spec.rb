@@ -57,9 +57,20 @@ describe TowersOfHanoi do
         
         it "throws an error if user incorrectly places a disc" do
             stack2.stack = [[3, 2], [1], []]
-            allow(stack2).to receive(:move)
-            expect(stack2.move(0, 1)).to raise_error("Can't place there.")
+            expect { stack2.move(0, 3) }.to raise_error("Can't place it there.")
+            expect { stack2.move(0, 1) }.to raise_error("Can't place it there.")
+            expect { stack2.move(2, 0) }.to raise_error("Can't place it there.")
         end
 
+        it "correctly places the disc" do
+            stack2.stack = [[3, 2, 1], [], []]
+            stack2.move(0, 1)
+            expect(stack2.stack).to eq([[3, 2], [1], []])
+        end
+
+        it "ends the game when the last peg has been filled correctly" do
+            stack2.stack = [[], [], [3, 2, 1]]
+            expect(stack2.won?).to eq(true)
+        end
     end
 end

@@ -1,4 +1,5 @@
 #code goes here
+require "byebug"
 
 class Array
 
@@ -47,42 +48,52 @@ class TowersOfHanoi
         @stack = [[3, 2, 1], [], []]
     end
 
-    def move
-        begin
-            puts "Please enter take and place, separated by a comma 0,1:"
-            input = self.get_move
-            take, place = input
-        rescue ArgumentError
-            p "invalid input"
-            retry
-        else
-            @stack[place] << @stack[take].pop
-            p @stack
+    def move(take, place)
+        raise "Can't place it there." unless take.between?(0, 2) && place.between?(0, 2)
+        raise "Can't place it there." if @stack[take].empty?
+        unless @stack[place].empty?
+            raise "Can't place it there." if @stack[place].last < @stack[take].last
         end
     end
 
-    def play
-        until won?
-            self.move
-        end
-    end
+    # def move
+    #     begin
+    #         puts "Please enter take and place, separated by a comma 0,1:"
+    #         input = self.get_move
+    #         take, place = input
+    #     rescue ArgumentError
+    #         p "invalid input"
+    #         retry
+    #     else
+    #         # debugger
+    #         @stack[place] << @stack[take].pop
+    #         @stack
+    #     end
+    # end
 
-    def won?
-        @stack == [[],[],[3, 2, 1]]
-    end
+    # def play
+    #     until won?
+    #         self.move
+    #     end
+    # end
 
-    def get_move
-        input = gets.chomp.split(",").map(&:to_i)
-        take, place = input
-        raise ArgumentError if !take.between?(0, 2) || !place.between?(0, 2)
-        raise ArgumentError if @stack[take].empty?
-        raise ArgumentError if !input.length == 2
-        raise ArgumentError if (!@stack[take].empty? && !@stack[place].empty?) && (@stack[take].last > @stack[place].last)
-    end
+    # def won?
+    #     @stack == [[],[],[3, 2, 1]]
+    # end
+
+    # def get_move
+    #     input = gets.chomp.split(",").map(&:to_i)
+    #     take, place = input
+    #     raise ArgumentError.new("Can't place it there.") if !take.between?(0, 2) || !place.between?(0, 2)
+    #     raise ArgumentError.new("Can't place it there.") if @stack[take].empty?
+    #     raise ArgumentError.new("Can't place it there.") if !input.length == 2
+    #     raise ArgumentError.new("Can't place it there.") if (!@stack[take].empty? && !@stack[place].empty?) && (@stack[take].last > @stack[place].last)
+    #     input
+    # end
 
 
     attr_accessor :stack
 end
 
-game = TowersOfHanoi.new
-game.play
+# game = TowersOfHanoi.new
+# game.play
