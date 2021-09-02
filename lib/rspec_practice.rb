@@ -41,29 +41,48 @@ class Array
     end
 end
 
-class BadPlacementError < StandardError; end
-
 class TowersOfHanoi
+
     def initialize
         @stack = [[3, 2, 1], [], []]
-        @stack
     end
 
     def move
-        puts "Please enter take and place, separated by a comma (0,1):"
         begin
-            input = gets.chomp.split(",").map(&:to_i)
+            puts "Please enter take and place, separated by a comma 0,1:"
+            input = self.get_move
             take, place = input
-            raise "Can't place there." if @stack[take].last > @stack[place].last
-            raise "Out of range." if !take.between?(0, 2) || !place.between?(0, 2)
-            raise "Can't take from empty." if @stack[take].empty?
-            raise "Incorrect input." if !input.length == 2
-        rescue
+        rescue ArgumentError
+            p "invalid input"
             retry
+        else
+            @stack[place] << @stack[take].pop
+            p @stack
         end
-
-        @stack[place] << @stack[take].pop
     end
+
+    def play
+        until won?
+            self.move
+        end
+    end
+
+    def won?
+        @stack == [[],[],[3, 2, 1]]
+    end
+
+    def get_move
+        input = gets.chomp.split(",").map(&:to_i)
+        take, place = input
+        raise ArgumentError if !take.between?(0, 2) || !place.between?(0, 2)
+        raise ArgumentError if @stack[take].empty?
+        raise ArgumentError if !input.length == 2
+        raise ArgumentError if (!@stack[take].empty? && !@stack[place].empty?) && (@stack[take].last > @stack[place].last)
+    end
+
 
     attr_accessor :stack
 end
+
+game = TowersOfHanoi.new
+game.play
